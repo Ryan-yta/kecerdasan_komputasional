@@ -5,22 +5,40 @@ on:
     branches:
       - main
 
+permissions:
+  pages: write
+  id-token: write
+  contents: read
+
 jobs:
-  deploy-book:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          pip install jupyter-book
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Jupyter Book
+        run: pip install jupyter-book
 
       - name: Build the book
-        run: |
-          jupyter-book build .
+        run: jupyter-book build .
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_build/html
+          path: ./_build/html
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/deploy-pages@v4
