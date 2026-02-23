@@ -3,4 +3,4 @@ author: Ainur Suharyanto
 logo: ""
 
 execute:
-  execute_notebooks: off
+  execute_notebooks: force
