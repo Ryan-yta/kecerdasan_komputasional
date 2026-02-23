@@ -1,2 +1,2 @@
 # kecerdasan_komputasional
-kerkom
+
