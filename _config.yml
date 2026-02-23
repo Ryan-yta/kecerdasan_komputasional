@@ -1,0 +1,6 @@
+title: My Jupyter Book
+author: Ainur Suharyanto
+logo: ""
+
+execute:
+  execute_notebooks: force
